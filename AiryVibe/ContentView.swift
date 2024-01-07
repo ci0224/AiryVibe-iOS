@@ -8,14 +8,38 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var allStudios: [Studio] = []
+    @State var errorMessage: String = ""
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            VStack {
+                Text("AiryVibe")
+                    .font(.title)
+            }
+            if allStudios.count > 0 {
+                NavigationView {
+                    List(allStudios, id:\.studioName) { studio_data in
+                        HStack{
+                            Text(studio_data.studioName)
+                        }
+                    }
+                }
+            }
+            if !errorMessage.isEmpty{
+                Text(errorMessage)
+            }
+            
         }
         .padding()
+        .task {
+            do {
+               allStudios = try await fetchAllStudioDataApi()
+            } catch{
+                errorMessage = "no"
+                print("hi")
+                print("Error: \(error)")
+            }
+        }
     }
 }
 

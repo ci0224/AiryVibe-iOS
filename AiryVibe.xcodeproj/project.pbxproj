@@ -14,6 +14,8 @@
 		825AE1BB2B4A3A6700F27BF7 /* AiryVibeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825AE1BA2B4A3A6700F27BF7 /* AiryVibeTests.swift */; };
 		825AE1C52B4A3A6700F27BF7 /* AiryVibeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825AE1C42B4A3A6700F27BF7 /* AiryVibeUITests.swift */; };
 		825AE1C72B4A3A6700F27BF7 /* AiryVibeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825AE1C62B4A3A6700F27BF7 /* AiryVibeUITestsLaunchTests.swift */; };
+		825AE1D42B4A464000F27BF7 /* StudioDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825AE1D32B4A464000F27BF7 /* StudioDataModel.swift */; };
+		825AE1D62B4A51CE00F27BF7 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825AE1D52B4A51CE00F27BF7 /* ApiManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,8 @@
 		825AE1C02B4A3A6700F27BF7 /* AiryVibeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AiryVibeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		825AE1C42B4A3A6700F27BF7 /* AiryVibeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AiryVibeUITests.swift; sourceTree = "<group>"; };
 		825AE1C62B4A3A6700F27BF7 /* AiryVibeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AiryVibeUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		825AE1D32B4A464000F27BF7 /* StudioDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioDataModel.swift; sourceTree = "<group>"; };
+		825AE1D52B4A51CE00F27BF7 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +100,8 @@
 			children = (
 				825AE1A92B4A3A6500F27BF7 /* AiryVibeApp.swift */,
 				825AE1AB2B4A3A6500F27BF7 /* ContentView.swift */,
+				825AE1D52B4A51CE00F27BF7 /* ApiManager.swift */,
+				825AE1D32B4A464000F27BF7 /* StudioDataModel.swift */,
 				825AE1AD2B4A3A6700F27BF7 /* Assets.xcassets */,
 				825AE1AF2B4A3A6700F27BF7 /* Preview Content */,
 			);
@@ -257,7 +263,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				825AE1D62B4A51CE00F27BF7 /* ApiManager.swift in Sources */,
 				825AE1AC2B4A3A6500F27BF7 /* ContentView.swift in Sources */,
+				825AE1D42B4A464000F27BF7 /* StudioDataModel.swift in Sources */,
 				825AE1AA2B4A3A6500F27BF7 /* AiryVibeApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
