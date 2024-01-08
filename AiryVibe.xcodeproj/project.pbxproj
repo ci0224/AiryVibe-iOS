@@ -17,6 +17,8 @@
 		825AE1D42B4A464000F27BF7 /* StudioDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825AE1D32B4A464000F27BF7 /* StudioDataModel.swift */; };
 		825AE1D62B4A51CE00F27BF7 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825AE1D52B4A51CE00F27BF7 /* ApiManager.swift */; };
 		825AE1D82B4B7A5E00F27BF7 /* StudioCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825AE1D72B4B7A5E00F27BF7 /* StudioCard.swift */; };
+		825AE1DB2B4BCE3900F27BF7 /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = 825AE1DA2B4BCE3900F27BF7 /* URLImage */; };
+		825AE1DD2B4BD2CA00F27BF7 /* StudioDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825AE1DC2B4BD2CA00F27BF7 /* StudioDetail.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +52,7 @@
 		825AE1D32B4A464000F27BF7 /* StudioDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioDataModel.swift; sourceTree = "<group>"; };
 		825AE1D52B4A51CE00F27BF7 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		825AE1D72B4B7A5E00F27BF7 /* StudioCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioCard.swift; sourceTree = "<group>"; };
+		825AE1DC2B4BD2CA00F27BF7 /* StudioDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioDetail.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				825AE1DB2B4BCE3900F27BF7 /* URLImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,6 +106,7 @@
 			children = (
 				825AE1A92B4A3A6500F27BF7 /* AiryVibeApp.swift */,
 				825AE1AB2B4A3A6500F27BF7 /* ContentView.swift */,
+				825AE1DC2B4BD2CA00F27BF7 /* StudioDetail.swift */,
 				825AE1D72B4B7A5E00F27BF7 /* StudioCard.swift */,
 				825AE1D52B4A51CE00F27BF7 /* ApiManager.swift */,
 				825AE1D32B4A464000F27BF7 /* StudioDataModel.swift */,
@@ -152,6 +157,9 @@
 			dependencies = (
 			);
 			name = AiryVibe;
+			packageProductDependencies = (
+				825AE1DA2B4BCE3900F27BF7 /* URLImage */,
+			);
 			productName = AiryVibe;
 			productReference = 825AE1A62B4A3A6500F27BF7 /* AiryVibe.app */;
 			productType = "com.apple.product-type.application";
@@ -224,6 +232,9 @@
 				Base,
 			);
 			mainGroup = 825AE19D2B4A3A6500F27BF7;
+			packageReferences = (
+				825AE1D92B4BCE3900F27BF7 /* XCRemoteSwiftPackageReference "url-image" */,
+			);
 			productRefGroup = 825AE1A72B4A3A6500F27BF7 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -270,6 +281,7 @@
 				825AE1D82B4B7A5E00F27BF7 /* StudioCard.swift in Sources */,
 				825AE1AC2B4A3A6500F27BF7 /* ContentView.swift in Sources */,
 				825AE1D42B4A464000F27BF7 /* StudioDataModel.swift in Sources */,
+				825AE1DD2B4BD2CA00F27BF7 /* StudioDetail.swift in Sources */,
 				825AE1AA2B4A3A6500F27BF7 /* AiryVibeApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -600,6 +612,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		825AE1D92B4BCE3900F27BF7 /* XCRemoteSwiftPackageReference "url-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dmytro-anokhin/url-image.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		825AE1DA2B4BCE3900F27BF7 /* URLImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 825AE1D92B4BCE3900F27BF7 /* XCRemoteSwiftPackageReference "url-image" */;
+			productName = URLImage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 825AE19E2B4A3A6500F27BF7 /* Project object */;
 }

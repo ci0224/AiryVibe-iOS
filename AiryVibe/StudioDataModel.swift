@@ -8,7 +8,13 @@
 import Foundation
 
 // Studio struct with initializer
-struct Studio: Codable {
+struct Studio: Codable, Hashable {
+    static func == (lhs: Studio, rhs: Studio) -> Bool {
+        return lhs.studioName == rhs.studioName
+    }
+    func hash(into hasher: inout Hasher) {
+           hasher.combine(studioName)
+   }
     let studioName: String
     let photographerName: String?
     let socialMediaData: [SocialMedia]?
@@ -22,7 +28,6 @@ struct Studio: Codable {
     let addressState: String?
     let addressZip: String?
     let studioSummary: String?
-
     init(studioName: String, photographerName: String? = nil, socialMediaData: [SocialMedia]? = nil, logo: String? = nil, cover: String? = nil, serviceData: [ServiceData]? = nil, timeData: [TimeData]? = nil, address1: String? = nil, address2: String? = nil, addressCity: String? = nil, addressState: String? = nil, addressZip: String? = nil, studioSummary: String? = nil) {
         self.studioName = studioName
         self.photographerName = photographerName

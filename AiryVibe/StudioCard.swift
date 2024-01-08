@@ -6,31 +6,40 @@
 //
 
 import SwiftUI
+import URLImage
 
 struct StudioCard: View {
-    @Binding var studio_data : Studio
+    var studio : Studio
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             // First Row: Cover Image
-            if let cover = studio_data.cover, let imageUrl = URL(string: cover), let imageData = try? Data(contentsOf: imageUrl), let uiImage = UIImage(data: imageData) {
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height: 180)
-            } else {
-                Image(systemName: "photo") // Placeholder image
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height: 180)
+            
+            HStack(alignment: .center) {
+                Spacer()
+                if let coverURLString = studio.cover, !coverURLString.isEmpty,
+                    let coverURL = URL(string: coverURLString) {
+                    URLImage(coverURL) { image in
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: 180, alignment: .center)
+                    }
+                } else {
+                    Image(systemName: "photo") // Placeholder image
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: 180)
+                }
+                Spacer()
             }
-
             // Second Row: Studio Name
-            Text(studio_data.studioName)
-
+            HStack {
+                Text(studio.studioName)
+            }
             // Third Row: City, State and "AiryVibe"
             HStack {
-                if let city = studio_data.addressCity, let state = studio_data.addressState {
+                if let city = studio.addressCity, let state = studio.addressState {
                     Text("\(city), \(state)")
                 }
                 Spacer()
@@ -38,7 +47,7 @@ struct StudioCard: View {
             }
             .font(.subheadline)
         }
-        .padding()
+        .padding(2)
         .background(Color(red: 122, green: 122, blue: 122))
         .cornerRadius(10)
         .shadow(radius: 5)
