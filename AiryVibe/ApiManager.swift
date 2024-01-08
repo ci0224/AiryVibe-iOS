@@ -44,5 +44,6 @@ func fetchAllStudioDataApi() async throws -> [Studio] {
     }
     
     let studios = fullResponse.studioData ?? []
+    print(studios[2])
     return studios
 }

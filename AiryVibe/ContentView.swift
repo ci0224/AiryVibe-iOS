@@ -17,20 +17,21 @@ struct ContentView: View {
                     .font(.title)
             }
             if allStudios.count > 0 {
-                NavigationView {
-                    List(allStudios, id:\.studioName) { studio_data in
-                        HStack{
-                            Text(studio_data.studioName)
+                ScrollView {
+                    LazyVStack(spacing: 10) {
+                        ForEach($allStudios, id: \.studioName) { studio in
+                            StudioCard(studio_data: studio)
+                                // No padding around each card
                         }
                     }
                 }
+                .padding(2)
             }
             if !errorMessage.isEmpty{
                 Text(errorMessage)
             }
             
         }
-        .padding()
         .task {
             do {
                allStudios = try await fetchAllStudioDataApi()
