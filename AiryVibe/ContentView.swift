@@ -15,16 +15,16 @@ struct ContentView: View {
         NavigationStack {
             ScrollView {
                 if allStudios.count > 0 {
-                        LazyVStack(spacing: 10) {
-                           ForEach(allStudios, id: \.studioName) { studio in
-                               NavigationLink(value: studio) {
-                                   StudioCard(studio: studio)
-                                       .foregroundColor(.primary)
-                                       .navigationTitle("AiryVibe")
-                               }
-                            }
+                    LazyVStack(spacing: 10) {
+                       ForEach(allStudios, id: \.studioName) { studio in
+                           NavigationLink(value: studio) {
+                               StudioCard(studio: studio)
+                                   .foregroundColor(.primary)
+                                   .navigationTitle("AiryVibe")
+                           }
                         }
                     }
+                }
                 if !errorMessage.isEmpty{
                     Text(errorMessage)
                 }
@@ -40,7 +40,7 @@ struct ContentView: View {
                 errorMessage = "Failed to fetch studio data."
                 print("Error: \(error)")
             }
-        }
+        }.contentMargins(4)
     }
 }
 

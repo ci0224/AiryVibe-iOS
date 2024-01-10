@@ -7,6 +7,31 @@
 
 import SwiftUI
 
+struct CarouselItem: View {
+    let imageUrl: String
+
+    var body: some View {
+        // You can use an asynchronous image loading library or use your own logic to load the image from the URL
+        AsyncImage(url: URL(string: imageUrl)) { phase in
+            switch phase {
+            case .empty:
+                ProgressView()
+            case .success(let image):
+                image
+                    .resizable()
+                    .scaledToFit()
+            case .failure:
+                Image(systemName: "exclamationmark.square")
+            @unknown default:
+                EmptyView()
+            }
+        }
+        .frame(width: 200, height: 200) // Adjust the size as needed
+        .cornerRadius(10)
+        .padding(10)
+    }
+}
+
 struct StudioDetail: View {
     var studio: Studio
 
@@ -55,22 +80,31 @@ struct StudioDetail: View {
                     }
                 }
 
-                if let serviceData = studio.serviceData {
-                    ForEach(serviceData, id: \.product_id) { service in
-                        VStack(alignment: .leading) {
-                            Text(service.serviceName).font(.headline)
-                            ForEach(service.prices, id: \.price_id) { price in
-                                Text("\(price.priceName): $\(price.price)")
-                            }
-                        }
-                    }
-                }
-
                 if let timeData = studio.timeData {
                     ForEach(timeData, id: \.day) { time in
                         Text("\(time.day): \(time.start) - \(time.end)")
                     }
                 }
+                
+                if let serviceData = studio.serviceData {
+                    ForEach(serviceData, id: \.product_id) { service in
+                        VStack(alignment: .leading) {
+                            ScrollView(.horizontal) {
+                                LazyHStack {
+                                    ForEach(service.images, id: \.url) { image in
+                                        CarouselItem(imageUrl: image.url)
+                                    }
+                                }
+                            }
+                            Text(service.serviceName).font(.headline)
+                            ForEach(service.prices, id: \.price_id) { price in
+                                let formattedPrice = String(format: "%.2f", Double(price.price)/100)
+                                Text("\(price.priceName): $\(formattedPrice)")
+                            }
+                        }
+                    }
+                }
+
             }
             .padding()
         }
@@ -102,7 +136,7 @@ struct StudioDetail: View {
                                 ServiceData(
                                     images: [S3Image(name: "wedding1.jpg", fileType: "jpg", url: "https://example.com/wedding1.jpg")],
                                     serviceName: "Wedding Photography",
-                                    prices: [Price(price_id: "P1", description: "Full-day coverage", priceName: "Full Day", price: 1200, isAdjustable: false)],
+                                    prices: [Price(price_id: "P1", description: "Full-day coverage", priceName: "Full Day", price: 1220, isAdjustable: false)],
                                     product_id: "WED123"
                                 )
                             ],
