@@ -106,7 +106,7 @@ struct Price: Codable {
 }
 
 // TimeData struct with initializer
-struct TimeData: Codable {
+struct TimeData: Codable, Comparable{
     let start: String
     let day: String
     let end: String
@@ -115,5 +115,18 @@ struct TimeData: Codable {
         self.start = start
         self.day = day
         self.end = end
+    }
+    
+    static func < (lhs: TimeData, rhs: TimeData) -> Bool {
+        let daysOrder = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+            guard let lhsIndex = daysOrder.firstIndex(of: lhs.day),
+                  let rhsIndex = daysOrder.firstIndex(of: rhs.day) else {
+                return false
+            }
+            if lhsIndex != rhsIndex {
+                return lhsIndex < rhsIndex
+            } else {
+                return lhs.start < rhs.start
+            }
     }
 }

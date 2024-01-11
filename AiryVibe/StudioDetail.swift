@@ -34,26 +34,29 @@ struct CarouselItem: View {
 
 struct StudioDetail: View {
     var studio: Studio
+    @State private var selectedServiceIndex: Int = 0
+    @State private var selectedPriceOptionIndex: Int = 0
 
     var body: some View {
         ScrollView {
+            // basic info Vstack
             VStack(alignment: .leading, spacing: 10) {
                 HStack{
                     if let logoUrl = studio.logo, let url = URL(string: logoUrl) {
                         AsyncImage(url: url){ phase in
                             switch phase {
-                                case .empty:
-                                    Text("Loading...")
-                                case .success(let image):
-                                    image
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(height: 40)
-                                case .failure:
-                                    Text("Failed to load logo")
-                                @unknown default:
-                                    Text("Unexpected state")
-                                }
+                            case .empty:
+                                Text("Loading...")
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(height: 40)
+                            case .failure:
+                                Text("Failed to load logo")
+                            @unknown default:
+                                Text("Unexpected state")
+                            }
                         }
                         .frame(height: 40)
                     }
@@ -61,52 +64,115 @@ struct StudioDetail: View {
                         .font(.title2)
                         .fontWeight(.bold)
                 }
+                .padding(0)
                 if let photographerName = studio.photographerName {
                     Text("Photographer: \(photographerName)")
                 }
-
+                
                 if let summary = studio.studioSummary {
                     Text("Summary: \(summary)")
                 }
-
+                
                 if let address = formatAddress(studio) {
                     Text("Address: \(address)")
                         .foregroundColor(.blue)
                 }
-
+                
                 if let socialMediaData = studio.socialMediaData {
                     ForEach(socialMediaData, id: \.accountID) { media in
                         Text("\(media.platform): \(media.accountID)")
                     }
                 }
-
-                if let timeData = studio.timeData {
-                    ForEach(timeData, id: \.day) { time in
+                
+                if let timeData = studio.timeData?.sorted() {
+                    ForEach(timeData.indices, id: \.self) { index in
+                        let time = timeData[index]
                         Text("\(time.day): \(time.start) - \(time.end)")
                     }
                 }
-                
-                if let serviceData = studio.serviceData {
-                    ForEach(serviceData, id: \.product_id) { service in
-                        VStack(alignment: .leading) {
-                            ScrollView(.horizontal) {
-                                LazyHStack {
-                                    ForEach(service.images, id: \.url) { image in
-                                        CarouselItem(imageUrl: image.url)
-                                    }
+            }
+            .padding(0)
+            
+            Divider()
+            // Service stack
+            VStack(alignment: .leading, spacing: 10){
+                if let selectedService = studio.serviceData?[selectedServiceIndex] {
+                    
+                    // Select service image stack
+                    if selectedService.images.count != 0 {
+                        // if selected service has images
+                        ScrollView(.horizontal) {
+                            LazyHStack {
+                                ForEach(selectedService.images, id: \.url) { image in
+                                    CarouselItem(imageUrl: image.url)
                                 }
                             }
-                            Text(service.serviceName).font(.headline)
-                            ForEach(service.prices, id: \.price_id) { price in
-                                let formattedPrice = String(format: "%.2f", Double(price.price)/100)
-                                Text("\(price.priceName): $\(formattedPrice)")
-                            }
                         }
+                        Divider()
+                    }
+                    // selected price option info
+                    VStack(alignment: .leading) {
+                        Text("Description:\(selectedService.prices[selectedPriceOptionIndex].description)")
+                        Text("Price: $\(String(format: "%.02f", Double(selectedService.prices[selectedPriceOptionIndex].price)/100))")
+                        
+                        Divider()
                     }
                 }
+                // service selection stack
+                if let serviceData = studio.serviceData {
+                    ScrollView(.horizontal) {
+                        LazyHStack{
+                            ForEach(serviceData.indices, id: \.self) { index in
+                                
+                                Button(action: {
+                                    if selectedServiceIndex != index {
+                                        selectedPriceOptionIndex = 0
+                                        print("Price selected is reset")
+                                    }
+                                    selectedServiceIndex = index
+                                    print("Item selected at index: \(index)")
+                                }, label: {
+                                    Text(serviceData[index].serviceName)
+                                        .padding(16)
+                                        .background(selectedServiceIndex==index ? Color.mint : Color.gray)
+                                        .foregroundColor(.white)
+                                        .cornerRadius(10)
+                                })
+                            }
+                        }
+                        .padding(.horizontal, 10)
+                        .padding(.bottom, 10)
+                    }
+                    .padding(0)
+                    Divider()
+                }
+                // price option selection stack
+                if let priceOptions = studio.serviceData?[selectedServiceIndex].prices {
+                    ScrollView(.horizontal) {
+                        LazyHStack{
+                            ForEach(priceOptions.indices, id: \.self) { index in
+                                Button(action: {
+                                    selectedPriceOptionIndex = index
+                                    print("Item selected at index: \(index)")
+                                }, label: {
+                                    Text(priceOptions[index].priceName)
+                                        .padding(6)
+                                        .background(selectedPriceOptionIndex==index ? Color.mint : Color.gray)
+                                        .foregroundColor(.white)
+                                        .cornerRadius(10)
+                                        .controlSize(.small)
+                                })
 
+                            }
+                        }
+                        .padding(.horizontal, 10)
+                        .padding(.bottom, 10)
+                    }
+                    .padding(0)
+                    Divider()
+                }
+                
             }
-            .padding()
         }
     }
 
@@ -136,6 +202,12 @@ struct StudioDetail: View {
                                 ServiceData(
                                     images: [S3Image(name: "wedding1.jpg", fileType: "jpg", url: "https://example.com/wedding1.jpg")],
                                     serviceName: "Wedding Photography",
+                                    prices: [Price(price_id: "P1", description: "Full-day coverage", priceName: "Full Day", price: 1220, isAdjustable: false)],
+                                    product_id: "WED123"
+                                ),
+                                ServiceData(
+                                    images: [S3Image(name: "wedding1.jpg", fileType: "jpg", url: "https://example.com/wedding1.jpg")],
+                                    serviceName: "Other Photography",
                                     prices: [Price(price_id: "P1", description: "Full-day coverage", priceName: "Full Day", price: 1220, isAdjustable: false)],
                                     product_id: "WED123"
                                 )
